@@ -53,7 +53,7 @@ func main() {
 		loginForm.Add("txtNRIC", os.Getenv("NRIC"))
 		loginForm.Add("txtPassword", os.Getenv("PASSWORD"))
 		loginForm.Add("btnLogin", " ")
-		req, err := http.NewRequest("POST", "http://www.bbdc.sg/bbdc/bbdc_web/header2.asp",
+		req, err := http.NewRequest("POST", "http://www.bbdc.sg/bbdc/b-mainframe.asp",
 			strings.NewReader(loginForm.Encode()))
 		errCheck(err, "Error creating log in request")
 		//req.AddCookie(aspxanon)
@@ -65,7 +65,7 @@ func main() {
 
 		//fetching the booking page
 		log.Println("Fetching booking page")
-		req, err = http.NewRequest("POST", "http://www.bbdc.sg/bbdc/b-3c-pLessonBooking1.asp",
+		req, err = http.NewRequest("POST", "http://www.bbdc.sg/bbdc/b-mainframe.asp",
 			strings.NewReader(bookingForm().Encode()))
 		//req.AddCookie(aspxanon)
 		req.AddCookie(sessionID)
@@ -123,7 +123,7 @@ func main() {
 						//then split on " and take the second element to get 1893904
 						slotID := strings.Split(strings.Split(strings.Split(substr, ",")[6], "value=")[1], "\"")[1]
 						log.Println("Booking slot")
-						req, err = http.NewRequest("POST", "http://www.bbdc.sg/bbdc/b-3c-pLessonBookingDetails.asp",
+						req, err = http.NewRequest("POST", "http://www.bbdc.sg/bbdc/b-mainframe.asp",
 							strings.NewReader(paymentForm(slotID).Encode()))
 						//req.AddCookie(aspxanon)
 						req.AddCookie(sessionID)
@@ -181,7 +181,7 @@ func loadEnvironmentalVariables() {
 }
 
 func fetchCookies() (*http.Cookie) {
-	resp, err := http.Get("http://www.bbdc.sg/bbdc/bbdc_web/newheader.asp")
+	resp, err := http.Get("http://www.bbdc.sg/bbdc/b-mainframe.asp")
 	errCheck(err, "Error fetching cookies (sessionID)")
 	sessionID := resp.Cookies()[0]
 	return sessionID
