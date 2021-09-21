@@ -22,3 +22,5 @@ bbdcbot
 
 #logs
 *.txt
+
+test.go
